@@ -51,4 +51,27 @@ class HomepageController extends AbstractController
         }
         return new Response("<html><body>$msg</body></html>"); 
     }
+
+    #[Route('/data.{_format}', name: 'api_output', requirements: ['_format' => 'xml|json'])]
+    
+    public function api($_format)
+    {
+        $data = [
+            ['id' => 1, 'naam' => 'Piet'],
+            ['id' => 2, 'naam' => 'Wilma'],
+            ['id' => 3, 'naam' => 'Harrie'],
+        ];
+        if($_format == 'json') {
+            return($this->json($data));
+        } else {
+        $d = "<data>";
+        foreach($data as $record) {
+            $id = $record["id"];
+            $naam = $record["naam"];
+            $d .= "<record id = 'id'>$naam</record>";
+        }
+        $d .= "</data>";
+        return(new Response($d));
+        }
+    }
 }
