@@ -10,7 +10,7 @@ use Psr\Log\LoggerInterface;
 
 #[Route('blog')]
 
-class BlogController extends AbstractController
+class BlogController extends BaseController
 {
     #[Route('/{page}', name: 'blog_list', requirements: ['page' => '/d+'])]
     #[Template()]
