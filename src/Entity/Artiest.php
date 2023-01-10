@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ArtiestRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArtiestRepository::class)]
@@ -27,6 +29,14 @@ class Artiest
 
     #[ORM\Column(type: 'string', length: 100)]
     private $website;
+
+    #[ORM\OneToMany(mappedBy: 'artiest', targetEntity: Optreden::class)]
+    private $optredens;
+
+    public function __construct()
+    {
+        $this->optredens = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -89,6 +99,36 @@ class Artiest
     public function setWebsite(string $website): self
     {
         $this->website = $website;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Optreden>
+     */
+    public function getOptredens(): Collection
+    {
+        return $this->optredens;
+    }
+
+    public function addOptreden(Optreden $optreden): self
+    {
+        if (!$this->optredens->contains($optreden)) {
+            $this->optredens[] = $optreden;
+            $optreden->setArtiest($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOptreden(Optreden $optreden): self
+    {
+        if ($this->optredens->removeElement($optreden)) {
+            // set the owning side to null (unless already changed)
+            if ($optreden->getArtiest() === $this) {
+                $optreden->setArtiest(null);
+            }
+        }
 
         return $this;
     }
