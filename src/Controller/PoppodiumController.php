@@ -10,12 +10,11 @@ use App\Entity\Poppodium;
 
 class PoppodiumController extends AbstractController
 {
-    /**
-     * @Route("/poppodium", name="poppodium")
-     */
+    #[Route('/poppodium', name: 'poppodium')]
+    
     public function index(): Response
     {
-       /// We simuleren hier even een $_POST van een formulier
+       /// Onderstaande is simuleren van een $_POST request
        $podium = [
         "naam" => "De Melkweg",
         "adres" => "Lijnbaansgracht 234a",

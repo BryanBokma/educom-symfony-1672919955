@@ -27,7 +27,7 @@ class Poppodium
     #[ORM\Column(type: 'string', length: 50)]
     private $woonplaats;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'string', length: 50)]
     private $telefoonnummer;
 
     #[ORM\Column(type: 'string', length: 50)]
@@ -108,7 +108,7 @@ class Poppodium
         return $this->telefoonnummer;
     }
 
-    public function setTelefoonnummer(int $telefoonnummer): self
+    public function setTelefoonnummer(string $telefoonnummer): self
     {
         $this->telefoonnummer = $telefoonnummer;
 
