@@ -10,7 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-#[Route('/')]
+#[Route('/homepage')]
 
 class HomepageController extends AbstractController
 {
@@ -73,5 +73,12 @@ class HomepageController extends AbstractController
         $d .= "</data>";
         return(new Response($d));
         }
+    }
+
+    #[Route("/save-data", name: "homepage_save_data")]
+
+    public function saveData(Request $request) {
+        $params = $request->request->all();
+        dd($params);
     }
 }

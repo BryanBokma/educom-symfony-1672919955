@@ -24,9 +24,7 @@ class BlogController extends BaseController
     
     public function show(LoggerInterface $logger, $slug)
     {
-        $logger->info('info Message');
-        $logger->warning('Warning Message');
-        $logger->error('De waarde van id is: $slug');
+        $this->log("info Message from extended BaseController", $type = "info");
         
         dd($slug);
     }

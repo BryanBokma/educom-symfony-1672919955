@@ -10,21 +10,28 @@ class BaseController extends AbstractController
 {
     private $logger;
     
-    protected function log($msg, $type)
-    {
-        $this->logger->info($msg);
+    protected function log($msg, $type = "info")
+    {   
+        switch($type) {
+            
+            case "info": {
+                $this->logger->info($msg);
+            }
+
+            case "warning": {
+                $this->logger->warning($msg);
+            }
+
+            case "error": {
+                $this->logger->error($msg);
+            }
+        }
     }
 
     public function __construct(LoggerInterface $logger) {
         $this->logger = $logger;
     } 
-
-    #[Route('/show{id}', name: 'blog_show')]
-
-    public function show($id = 1)
-    {
-        $this->log('info Message from extended BaseController');
-        dd($id);
-    }
+    
+    
     
 }
