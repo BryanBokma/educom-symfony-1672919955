@@ -64,10 +64,10 @@ class OptredenRepository extends ServiceEntityRepository
 
         //De variable optreden defenieer je als de functie setPodium, die vervolgens de private functie die je van tevoren hebt gedefinieerd runt en daaruit het poppodium_id pakt
         //Idem setArtiest
-        $optreden->setPodium($this->fetchPoppodium($params["poppodium_id"]));
+        $optreden->setPoppodium($this->fetchPoppodium($params["poppodium_id"]));
         $optreden->setArtiest($this->fetchArtiest($params["hoofdprogramma_id"]));
 
-        //Als de variable params met voorpogramma_id word opgehaald dan desbetreffende artiest ok ophalen d.m.v. de functie
+        //Checken als er iets in voorprogramma_id gedefinieerd is, dan update hij het setVoorprogramma
         if(isset($params["voorprogramma_id"])) {
             $optreden->setVoorprogramma($this->fetchArtiest($params["voorprogramma_id"]));
         }
@@ -87,7 +87,18 @@ class OptredenRepository extends ServiceEntityRepository
 
         //je returned de variable optreden naar de aanroepende controller functie
         return($optreden);
-        
+    }
+
+    public function deleteOptreden($id) {
+    
+        $optreden = $this->find($id);
+        if($optreden) {
+            $this->_em->remove($optreden);
+            $this->_em->flush();
+            return(true);
+        }
+    
+        return(false);
     }
     
 }

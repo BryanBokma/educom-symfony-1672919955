@@ -28,7 +28,7 @@ class Optreden
     #[ORM\Column(type: 'string', length: 50)]
     private $omschrijving;
 
-    #[ORM\Column(type: 'string', length: 50, nullable: true)]
+    #[ORM\Column(type: 'datetime', length: 50, nullable: true)]
     private $datum;
 
     #[ORM\Column(type: 'integer')]
@@ -93,12 +93,12 @@ class Optreden
         return $this;
     }
 
-    public function getDatum(): ?string
+    public function getDatum(): \DateTimeInterface
     {
         return $this->datum;
     }
 
-    public function setDatum(?string $datum): self
+    public function setDatum(\DateTimeInterface $datum): self
     {
         $this->datum = $datum;
 

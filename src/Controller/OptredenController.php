@@ -21,6 +21,7 @@ class OptredenController extends AbstractController
         ]);
     }
 
+    #[Route('/save', name: 'optreden_save')]
     public function saveOptreden() {
         
         $rep = $this->getDoctrine()->getRepository(Optreden::class);
