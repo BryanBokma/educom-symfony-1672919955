@@ -34,6 +34,10 @@ class ArtiestRepository extends ServiceEntityRepository
         return($artiest);
     }
 
+    public function fetchArtiest($id) {
+        return($this->find($id));
+    }
+
     // /**
     //  * @return Artiest[] Returns an array of Artiest objects
     //  */

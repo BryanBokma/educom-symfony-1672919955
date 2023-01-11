@@ -38,6 +38,10 @@ class PoppodiumRepository extends ServiceEntityRepository
         return($podium);
     }
 
+    public function fetchPoppodium($id) {
+        return($this->find($id));
+    }
+
     // /**
     //  * @return Poppodium[] Returns an array of Poppodium objects
     //  */
