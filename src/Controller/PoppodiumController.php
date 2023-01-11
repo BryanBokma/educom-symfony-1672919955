@@ -23,6 +23,8 @@ class PoppodiumController extends AbstractController
         "telefoonnummer" => "020-5318181",
         "email" => "info@melkweg.nl",
         "website" => "https://melkweg.nl",
+        "logo_url" => "https://post.com",
+        "afbeelding_url" => "https://stef.com"
        ];
 
        $rep = $this->getDoctrine()->getRepository(Poppodium::class);

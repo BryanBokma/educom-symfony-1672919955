@@ -3,7 +3,6 @@
 namespace App\Repository;
 
 use App\Entity\Poppodium;
-use App\Entity\Artiest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -30,26 +29,13 @@ class PoppodiumRepository extends ServiceEntityRepository
         $podium->setTelefoonnummer($params["telefoonnummer"]);
         $podium->setEmail($params["email"]);
         $podium->setWebsite($params["website"]);
+        $podium->setLogoUrl($params["logo_url"]);
+        $podium->setAfbeeldingUrl($params["afbeelding_url"]);
 
         $this->_em->persist($podium);
         $this->_em->flush();
 
         return($podium);
-    }
-
-    public function saveArtiest($params) {
-
-        $artiest = new Artiest();
-        $artiest->setNaam($params["naam"]);
-        $artiest->setGenre($params["genre"]);
-        $artiest->setOmschrijving($params["omschrijving"]);
-        $artiest->setAfbeelding_url($params["afbeelding_url"]);
-        $artiest->setWebsite($params["website"]);
-
-        $this->_em->persist($artiest);
-        $this->_em->flush();
-
-        return($artiest);
     }
 
     // /**
