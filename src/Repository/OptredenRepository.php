@@ -27,7 +27,7 @@ class OptredenRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Optreden::class);
-        $this->artiestRepository = $this->_em->getRepository(Ariest::class);
+        $this->artiestRepository = $this->_em->getRepository(Artiest::class);
         $this->poppodiumRepository = $this->_em->getRepository(Poppodium::class);
     }
 
@@ -54,16 +54,20 @@ class OptredenRepository extends ServiceEntityRepository
 
     //Public function saveOptreden met bijbehorende variable
     public function saveOptreden($params) {
-
-        //hiermee maak je een "nieuwe" verbinding met de optreden.php en die definieer je als variable optreden
-        $optreden = new Optreden();
         
+        if(isset($params["id"]) && $params["id"] != "") {
+            $optreden = $this->find($params["id"]);
+        } else {
+            //hiermee maak je een nieuw record aan 
+            $optreden = new Optreden();
+        }
+
         //De variable optreden defenieer je als de functie setPodium, die vervolgens de private functie die je van tevoren hebt gedefinieerd runt en daaruit het poppodium_id pakt
         //Idem setArtiest
         $optreden->setPodium($this->fetchPoppodium($params["poppodium_id"]));
         $optreden->setArtiest($this->fetchArtiest($params["hoofdprogramma_id"]));
 
-        //Als de variable params met voorpogramma_id word opgehaald dan desbtereffende artiest ok ophalen d.m.v. de functie
+        //Als de variable params met voorpogramma_id word opgehaald dan desbetreffende artiest ok ophalen d.m.v. de functie
         if(isset($params["voorprogramma_id"])) {
             $optreden->setVoorprogramma($this->fetchArtiest($params["voorprogramma_id"]));
         }
