@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}LoginController!{% endblock %}
+{% block title %}Hello LoginController!{% endblock %}
 
 {% block body %}
 <style>
@@ -13,25 +13,14 @@
 {% endif %}
 
     <form action="{{ path('app_login') }}" method="post">
-        <label for="username">Email:</label>
+        <label for="username">Username:</label>
         <input type="text" id="username" name="_username" value="{{ last_username }}"/>
 
         <label for="password">Password:</label>
         <input type="password" id="password" name="_password"/>
 
-        {# If you want to control the URL the user is redirected to on success
-        <input type="hidden" name="_target_path" value="/account"/> #}
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
         <button type="submit">login</button>
     </form>
-
-{# <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/educom-symfony-1672919955/src/Controller/LoginController.php'|file_link(0) }}">src/Controller/LoginController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/educom-symfony-1672919955/templates/login/index.html.twig'|file_link(0) }}">templates/login/index.html.twig</a></code></li>
-    </ul>
-</div> #}
 {% endblock %}
