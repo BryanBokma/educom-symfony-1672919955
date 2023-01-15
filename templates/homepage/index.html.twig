@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomepageController!{% endblock %}
+{% block title %}Hello {{HomepageController!}} {% endblock %}
 
 {% block body %}
 <style>
@@ -13,8 +13,14 @@
 
     This friendly message is coming from:
     <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/educom-symfony-1672919955/src/Controller/HomepageController.php'|file_link(0) }}">src/Controller/HomepageController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/educom-symfony-1672919955/templates/homepage/index.html.twig'|file_link(0) }}">templates/homepage/index.html.twig</a></code></li>
+        <li>Your controller at 
+            <code>
+            <a href="{{ 'C:/xampp/htdocs/educom-symfony-1672919955/src/Controller/HomepageController.php'|file_link(0) }}">src/Controller/HomepageController.php</a>
+            </code></li>
+        <li>Your template at 
+            <code>
+            <a href="{{ 'C:/xampp/htdocs/educom-symfony-1672919955/templates/homepage/index.html.twig'|file_link(0) }}">templates/homepage/index.html.twig</a>
+            </code></li>
     </ul>
 </div>
 {% endblock %}
