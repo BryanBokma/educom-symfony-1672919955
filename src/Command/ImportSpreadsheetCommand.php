@@ -10,6 +10,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+use App\Service\PoppodiumService;
+use phpDocumentor\Reflection\Types\Parent_;
 
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -20,6 +22,14 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 // )]
 class ImportSpreadsheetCommand extends Command
 {
+    private $poppodiumService;
+    
+    public function __construct(PoppodiumService $poppodiumService) {
+        parent::__construct();
+        
+        $this->poppodiumService = $poppodiumService;   
+    }
+    
     protected function configure(): void
     {
         $this
@@ -27,38 +37,34 @@ class ImportSpreadsheetCommand extends Command
             ->setDescription('Import Excel Spreadsheet')
             ->setHelp('This command allows you to import a spreadsheet')
             ->addArgument('file', InputArgument::REQUIRED, 'Spreadsheet')
-            // ->addArgument('naam', InputArgument::REQUIRED, 'naam')
-            // ->addArgument('adres', InputArgument::REQUIRED, 'adres')
-            // ->addArgument('postcode', InputArgument::REQUIRED, 'postcode')
-            // ->addArgument('woonplaats', InputArgument::REQUIRED, 'woonplaats')
-            // ->addArgument('telefoonnummer', InputArgument::REQUIRED, 'telefoonnummer')
-            // ->addArgument('email', InputArgument::REQUIRED, 'email')
-            // ->addArgument('website', InputArgument::REQUIRED, 'website')
-            // ->addArgument('logo_url', InputArgument::REQUIRED, 'logo_url')
-            // ->addArgument('afbeelding_url', InputArgument::REQUIRED, 'afbeelding_url')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
-    {
-        // $data = [
-        //     "naam" => $input->getArgument('naam'),
-        //     "adres" => $input->getArgument('adres'),
-        //     "postcode" => $input->getArgument('postcocde'),
-        //     "woonplaats" => $input->getArgument('woonplaats'),
-        //     "telefoonnummer" => $input->getArgument('telefoonnummer'),
-        //     "email" => $input->getArgument('email'),
-        //     "website" => $input->getArgument('website'),
-        //     "logo_url" => $input->getArgument('logo_url'),
-        //     "afbeelding_url" => $input->getArgument('afbeelding_url')
-        // ];
-        
+    {    
         $inputFileName = $input->getArgument('file');
         $spreadsheet = IOFactory::load($inputFileName);
 
         $matrix = $spreadsheet->getSheet(0)->toArray();
 
-        echo var_dump($matrix);
+        foreach($matrix as $row) {
+            
+            $matrix_array = [
+                "naam" => $row[0],
+                "adres" => $row[1],
+                "postcode" => $row[2],
+                "woonplaats" => $row[3],
+                "telefoonnummer" => $row[4],
+                "email" => $row[5],
+                "website" => $row[6],
+                "logo_url" => $row[7],
+                "afbeelding_url" => $row[8],
+            ];
+        }
+
+        $this->poppodiumService->savePodium($matrix_array);
+
+        echo var_dump($matrix_array);
 
         return COMMAND::SUCCESS;
     }

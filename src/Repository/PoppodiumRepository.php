@@ -20,8 +20,13 @@ class PoppodiumRepository extends ServiceEntityRepository
     }
 
     public function savePodium($params) {
+
+        if(isset($params["id"]) && $params["id"] != "") {
+            $podium = $this->find($params["id"]);
+        } else {
+            $podium = new Poppodium();
+        }
         
-        $podium = new Poppodium();
         $podium->setNaam($params["naam"]);
         $podium->setAdres($params["adres"]);
         $podium->setPostcode($params["postcode"]);
