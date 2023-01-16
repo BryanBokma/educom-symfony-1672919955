@@ -13,6 +13,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class CreateArtistCommand extends Command
 {
+    private $artiest;
+
+    private function fetchArtiest($id)
+    {
+        return $this->artiest->fetchArtiest($id);
+    }
     
     protected function configure(): void
     {
@@ -33,7 +39,7 @@ class CreateArtistCommand extends Command
         }
 
         if ($input->getOption('option1')) {
-            // ...
+            return $this->fetchArtiest($id);
         }
 
         $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
