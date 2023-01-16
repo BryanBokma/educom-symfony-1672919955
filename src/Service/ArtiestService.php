@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Service;
+
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Artiest;
+
+class ArtiestService {
+
+    private $artiestRepository;
+
+    public function __construct(EntityManagerInterface $em) {
+        $this->artiestRepository = $em->getRepository(Artiest::class);
+    }
+
+    public function saveArtiest($params) {
+        $data = [
+          "id" => (isset($params["id"]) && $params["id"] != "") ? $params["id"] : null,
+          "naam" => $params["naam"],
+          "genre" => $params["genre"],
+          "omschrijving" => $params["omschrijving"],
+          "afbeelding_url" => $params["afbeelding_url"],
+          "website" => $params["website"]              
+        ];
+
+        echo var_dump($data);
+
+        $result = $this->artiestRepository->saveArtiest($data);
+        return($result);
+    }
+}
