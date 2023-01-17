@@ -66,26 +66,25 @@ class HomepageController extends AbstractController
         return new Response("<html><body>$msg</body></html>"); 
     }
 
-    #[Route('/data.{_format}', name: 'api_output', requirements: ['_format' => 'xml|json'])]
+    #[Route('/optredens.{_format}', name: 'optredens_output', requirements: ['_format' => 'xml|json'])]
     
-    public function api($_format)
+    public function ophalenOptredens($_format)
     {
-        $data = [
-            ['id' => 1, 'naam' => 'Piet'],
-            ['id' => 2, 'naam' => 'Wilma'],
-            ['id' => 3, 'naam' => 'Harrie'],
-        ];
+        $rep = $this->getDoctrine()->getRepository(Optreden::class);
+        $data = $rep->getAllOptredens();
+        
         if($_format == 'json') {
-            return($this->json($data));
+            return($this->json($data, context: [
+                ObjectNormalizer::IGNORED_ATTRIBUTES => ['__cloner__', '__initializer__'],
+                ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER => function($object) {
+                    return $object->getId();
+                }
+            ]));
         } else {
-        $d = "<data>";
-        foreach($data as $record) {
-            $id = $record["id"];
-            $naam = $record["naam"];
-            $d .= "<record id = 'id'>$naam</record>";
-        }
-        $d .= "</data>";
-        return(new Response($d));
+        return $this->render('homepage/test.xml.twig', [
+            'data' => $data,
+        ]);
+
         }
     }
 
@@ -96,13 +95,19 @@ class HomepageController extends AbstractController
         dd($params);
     }
 
-    #[Route('optredens', name: 'data_optredens')]
+    // #[Route('/optredens', name: 'data_optredens')]
 
-    public function ophalenOptredens() 
-    {
-        $rep = $this->getDoctrine()->getRepository(Optreden::class);
-        $data = $rep->getAllOptredens();
+    // public function ophalenOptredens() 
+    // {
+    //     $encoders = [new XmlEncoder(), new JsonEncoder()];
+    //     $normalizers = [new ObjectNormalizer()];
+    //     $serializer = new Serializer($normalizers, $encoders);
         
-        dump($data);
-    }
+    //     $rep = $this->getDoctrine()->getRepository(Optreden::class);
+    //     $data = $rep->getAllOptredens();
+
+    //     $jsonContent = $serializer->serialize($data, 'json');
+        
+    //     dump($jsonContent);
+    // }
 }

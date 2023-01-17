@@ -11,15 +11,6 @@
 <div class="example-wrapper">
     <h1>Hello {{ controller_name }}! ✅</h1>
 
-    {# Door optreden array loopen #}
-    {% for optredens in optreden %}
-    {{dump(optredens)}}
-        <div class='optreden'>
-            <h2>{{ optreden.naam }}</h2>
-            {# etc... #}
-        </div>
-    {% endfor %}
-
     This friendly message is coming from:
     <ul>
         <li>Your controller at 
